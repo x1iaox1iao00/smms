@@ -1,0 +1,177 @@
+/*首页样式*/
+html,body,#app,.el-container{
+    height: 100%;
+}
+.el-header, .el-footer {
+    color: #333;
+    line-height: 30px;
+}
+.el-header h2{
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+/* 左侧栏的样式 */
+.el-aside {
+    background: url(../images/left_bg.png) repeat-y;
+}
+
+/* 左侧栏的样式 */
+.el-aside {
+    background: url(../images/left_bg.png) repeat-y;
+}
+
+.el-aside a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* 左侧顶部的菜单 */
+#leftMenuTitle{
+    line-height: 30px;
+    text-align: right;
+    padding-right: 20px;
+    color: #fff;
+    font-size: 14px;
+}
+
+#leftMenuTitle h1{
+    font-size: 24px;
+    padding: 20px 0 10px 0;
+}
+
+/* 左侧的导航菜单 */
+.el-menu{
+    background-color: transparent;
+    border-right: none;
+}
+
+/* 菜单标题 */
+.el-submenu__title{
+    color: #fff;
+    background: url(../images/menu_bg.png) repeat-x;
+    height: 33px;
+    line-height: 33px;
+    width: 210px;
+    border-radius: 4px 0 0 4px;
+    margin-left: 20px;
+    text-align: right;
+}
+
+.el-submenu{
+    margin-bottom: 10px;
+}
+
+/* 子菜单 */
+.el-submenu .el-menu-item{
+    color: #fff;
+    height: 33px;
+    line-height: 33px;
+    width: 210px;
+    border-radius: 3px 0 0 3px;
+    margin-left: 20px;
+    text-align: right;
+    padding: 0 20px;
+}
+
+/* 子菜单选中的样式 */
+.el-menu-item.is-active{
+    background: url(../images/menu_bgOver.png) repeat-x;
+}
+.el-menu-item.is-active a{color: #409EFF;}
+
+/* 鼠标悬停和焦点的样式 */
+.el-menu-item:focus, .el-menu-item:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 隐藏菜单箭头 */
+.el-submenu__icon-arrow{
+    display: none;
+}
+
+/*右侧主体*/
+.el-main {
+    color: #333;
+    padding: 0;
+    margin: 8px 0;
+}
+#main {padding: 0;margin: 0 2px 5px 20px;width: 97%;border: 1px solid #ccc;border-radius: 10px;}
+.el-main .el-card__header{
+    height: 41px;
+    line-height: 41px;
+    padding: 0 20px;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    background: url(../images/cardTitleBg.png) repeat-x;
+}
+.el-main .el-card__body{
+    background-color: #fff;
+}
+#importAlert{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color:green;
+}
+body > .el-container {
+    background-color: #F8F8F8;
+}
+/*尾部样式*/
+.el-footer{
+    font-size: 12px;
+}
+.el-footer p{
+    border-top: solid 1px #ccc;
+    line-height: 40px;
+}
+.el-alert__icon{
+    color: #3a8ee6;
+}
+.el-alert{background-color:#DBE3FF;
+border: 1px solid #A5B6EF;
+color: #696D7A;}
+/*右侧背景颜色*/
+.el-container.is-vertical{
+    background-color:#EAEAEA;
+}
+/* 账号注册页面 */
+.el-input{
+    width: 40%;
+}
+
+/* 把下拉列表恢复为100% */
+.el-input--suffix{
+    width: 100%;
+}
+.el-table .warning-row {
+    background: oldlace;
+}
+
+.el-table .success-row {
+    background: #f0f9eb;
+}
+
+/*分类添加*/
+.title{margin: 10px 0;}
+.el-radio{margin: 10px 0;}
+.el-radio__input.is-checked .el-radio__inner{border-color: #dd6161;
+    background:#cf9236;}
+
+/*商品管理*/
+.el-table__header-wrapper{margin-top: 10px;color: black;}
+.el-table__header-wrapper:before{height: 3px;content: "";background-color: #cccccc;display: block;}
+.el-pagination{margin-top: 18px;}
+/*商品添加*/
+.el-textarea__inner{margin-bottom: 10px;    width: 60%;}
+/*会员添加*/
+.tab{margin-bottom: 10px;}
+.tab td{
+    padding: 8px 5px;
+}
+/*商品出库*/
+.total{margin: 10px 0;border-bottom: 1px solid #cccccc;padding: 10px 20px;width: 100%;
+box-sizing: border-box;}
+/*销售列表*/
+.el-date-editor.el-input, .el-date-editor.el-input__inner{width: 25%;margin-bottom: 15px;}

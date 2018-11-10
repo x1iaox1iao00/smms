@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统—商品管理</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="styles/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body>
+<div id="app">
+    <el-main id="main">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>商品管理</span>
+            </div>
+            <!-- 商品管理 -->
+            <div class="text item">
+                <!--下拉框-->
+                <template>
+                    <el-select v-model="value" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </template>
+                <span>关键字：</span>
+                <el-input v-model="input" placeholder=""></el-input>
+                <span>(商品名称，条形码)</span>
+                <el-button type="primary" icon="el-icon-search">查询</el-button>
+                <!--列表-->
+                <template>
+                    <el-table :row-class-name="tableRowClassName"
+                            :data="tableData"
+                            style="width: 100%">
+                        <el-table-column
+                                label="商品条形码"
+                                >
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.barCode }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="商品名称">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="所属分类">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.sort}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="售价(元)">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.salesPrice }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="促销价(元)">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.promotionPrice }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="市场价(元)">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.marketPrice }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="库存">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.inventory }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="库存总额(元)">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.inventoryPrice }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="销售总额(元)">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.totalSales }}</span>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column label="管理"  width="150px">
+                            <template slot-scope="scope">
+                                <el-button
+                                        size="mini"
+                                        @click="handleEdit(scope.$index, scope.row)"><i class="el-icon-edit"></i>
+                                </el-button>
+                                <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.$index, scope.row)"> <i class="el-icon-delete"></i>
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            <!--分页-->
+                <el-pagination
+                        background
+                        layout="prev, pager, next"
+                        :total="100">
+                </el-pagination>
+            </div>
+        </el-card>
+    </el-main>
+</div>
+<!-- 引入jquery -->
+<script src="./javascripts/jquery.min.js"></script>
+<!-- 引入vue -->
+<script src="./javascripts/vue.min.js"></script>
+<!-- 引入elementUI -->
+<script src="./javascripts/elementUI.js"></script>
+<script>
+    //创建vue实例
+    new Vue({
+        //挂载视图
+        el: "#app",
+        data() {
+            return {
+                options: [{
+                    value: '选项1',
+                    label: '顶级分类'
+                }, {
+                    value: '选项2',
+                    label: '一级分类'
+                }, {
+                    value: '选项3',
+                    label: '二级分类'
+                }, {
+                    value: '选项4',
+                    label: '三级分类'
+                }, {
+                    value: '选项5',
+                    label: '四级分类'
+                }],
+                value: '',
+                input: '',
+                tableData: [{
+                    barCode:'00001',
+                    name: '我的优乐美',
+                    sort:'优乐美',
+                    salesPrice:'2.00',
+                    promotionPrice:'未促销',
+                    marketPrice:'2.40',
+                    inventory:'0（缺）',
+                    inventoryPrice:'0.00',
+                    totalSales:'0',
+                },{
+                    barCode:'00002',
+                    name: '海飞丝去屑洗发水',
+                    sort:'海飞丝',
+                    salesPrice:'10.00',
+                    promotionPrice:'8.00',
+                    marketPrice:'12.00',
+                    inventory:'5',
+                    inventoryPrice:'35.00',
+                    totalSales:'40.00',
+                },{
+                    barCode:'00003',
+                    name: '茅台酒',
+                    sort:'茅台',
+                    salesPrice:'200.00',
+                    promotionPrice:'未促销',
+                    marketPrice:'240.00',
+                    inventory:'5',
+                    inventoryPrice:'900.00',
+                    totalSales:'800.00',
+                },{
+                    barCode:'00004',
+                    name: '龙凤呈祥',
+                    sort:'龙凤呈祥',
+                    salesPrice:'10.00',
+                    promotionPrice:'未促销',
+                    marketPrice:'12.00',
+                    inventory:'42',
+                    inventoryPrice:'55.90',
+                    totalSales:'10.00',
+                }]
+            }
+        },
+        methods: {
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex === 1) {
+                    return 'warning-row';
+                } else if (rowIndex === 3) {
+                    return 'success-row';
+                }
+                return '';
+            },
+            //编辑和删除的方法
+            handleEdit(index, row) {
+                console.log(index, row);
+            },
+            handleDelete(index, row) {
+                console.log(index, row);
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

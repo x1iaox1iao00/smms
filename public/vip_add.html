@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统—添加账号</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="styles/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body>
+<div id="app">
+    <el-main id="main">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>添加编组账号</span>
+            </div>
+            <div class="text item">
+                <!-- 添加的页面 -->
+                <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
+                         label-width="100px" v-model="labelPosition"
+                         class="demo-ruleForm">
+
+                    <el-form-item label="真实姓名" prop="vipName">
+                        <el-input v-model="ruleForm2.vipName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="会员卡卡号" prop="cardNumber">
+                        <el-input v-model="ruleForm2.cardNumber"></el-input>
+                    </el-form-item>
+                    <table class="tab">
+                        <tr>
+                            <td ><i style="color: red">*</i>用户组：</td>
+                            <td >
+                                <template>
+                                <el-select v-model="ruleForm2.value" placeholder="请选择用户组">
+                                    <el-option
+                                            v-for="item in options"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span>身份证号：</span></td>
+                            <td>  <el-input v-model="ruleForm2.idCard" placeholder="请输入身份证号"></el-input></td>
+                        </tr>
+                        <tr>
+                            <td> <span class="title">用户状态：</span></td>
+                            <td><template>
+                                <el-radio v-model="ruleForm2.radio" label="1">启用</el-radio>
+                                <el-radio v-model="ruleForm2.radio" label="2">禁用</el-radio>
+                            </template><br></td>
+                        </tr>
+                        <tr>
+                            <td> <span>手机号码：</span></td>
+                            <td><el-input v-model="ruleForm2.phone" placeholder="请输入手机号码"></el-input><br></td>
+                        </tr>
+                        <tr>
+                            <td> <span>座机号码：</span></td>
+                            <td>  <el-input v-model="ruleForm2.tel" placeholder="请输入座机号码"></el-input></td>
+                        </tr>
+                        <tr>
+                            <td><span>邮箱地址：</span></td>
+                            <td><el-input v-model="ruleForm2.email" placeholder="请输入邮箱地址"></el-input></td>
+                        </tr>
+                        <tr>
+                            <td> <span>地址选择：</span></td>
+                            <td>  <el-select v-model="ruleForm2.value1" placeholder="请选择省份">
+                                <el-option
+                                        v-for="item in options3"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                </el-option>
+                            </el-select>
+                                <el-select v-model="ruleForm2.value2" placeholder="请选择城市">
+                                    <el-option
+                                            v-for="item in options4"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select></td>
+                        </tr>
+                        <tr>
+                            <td><span>详细地址：</span></td>
+                            <td> <el-input v-model="ruleForm2.addr" placeholder="请输入详细地址"></el-input></td>
+                        </tr>
+                        <tr>
+                            <td><span>邮政编码：</span></td>
+                            <td> <el-input v-model="ruleForm2.postCode" placeholder="请输入邮政编码"></el-input></td>
+                        </tr>
+                    </table>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm2')">添加</el-button>
+                    </el-form-item>
+                </el-form>
+
+            </div>
+        </el-card>
+    </el-main>
+</div>
+<!-- 引入jquery -->
+<script src="./javascripts/jquery.min.js"></script>
+<!-- 引入vue -->
+<script src="./javascripts/vue.min.js"></script>
+<!-- 引入elementUI -->
+<script src="./javascripts/elementUI.js"></script>
+<script>
+    //创建vue实例
+    new Vue({
+        //挂载视图
+        el: "#app",
+        data() {
+            return {
+                labelPosition: 'top',
+                options3: [{
+                    value: '选项1',
+                    label: '四川'
+                }, {
+                    value: '选项1',
+                    label: '云南'
+                }],
+                options4: [{
+                    value: '选项1',
+                    label: '绵阳'
+                }, {
+                    value: '选项1',
+                    label: '成都'
+                },{
+                    value: '选项1',
+                    label: '大理'
+                }, {
+                    value: '选项1',
+                    label: '丽江'
+                }],
+                options: [{
+                    value: '选项1',
+                    label: '钻石会员70%'
+                }, {
+                    value: '选项2',
+                    label: '黄金会员80%'
+                }, {
+                    value: '选项3',
+                    label: '铂金会员90%'
+                }, {
+                    value: '选项4',
+                    label: '普通会员99%'
+                }],
+                ruleForm2: {
+                    vipName:'',
+                    value: '',
+                    value1: '',
+                    value2: '',
+                    radio: '2',
+                    cardNumber: '',
+                    idCard:'',
+                    phone:'',
+                    tel:'',
+                    email:'',
+                    addr:'',
+                    postCode:''
+                },
+                rules2: {
+                    vipName: [
+                        {required: true, message: "真实姓名必须填写", trigger: 'blur'}
+                    ],cardNumber: [
+                        {required: true, message: "会员卡号必须填写", trigger: 'blur'}
+                    ]}
+            };
+        },
+        methods: {
+
+            //提交表单
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //1. 表单验证通过就发起ajax请求到后端路由
+                           $.post('/users/add',this.ruleForm2,(result)=>{
+                        if(result.affectedRows>0){
+                            alert("添加成功");
+                        }else{
+                            alert("添加失败")
+                        }
+                           });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //重置表单
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

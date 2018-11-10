@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统——账号管理</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="styles/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body>
+<div id="app">
+    <el-main id="main">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>账号管理</span>
+            </div>
+            <div class="text item">
+                <!-- 账号管理 -->
+                <template>
+                    <el-table :data="tableData"  style="width: 100%">
+                        <el-table-column label="ID" >
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.u_id }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="用户名称" >
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="用户组">
+                            <template slot-scope="scope">
+                                <span style="margin-left: 10px">{{ scope.row.userGroup }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="日期" prop="createDatetime" :formatter="dateFormat">
+                        </el-table-column>
+                        <el-table-column label="管理" width="300">
+                            <template slot-scope="scope">
+                                <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary" plain>
+                                    <i class="el-icon-edit"></i> 编辑</el-button>
+                                <el-button size="mini" @click="handleDelete(scope.$index, scope.row)" type="danger" plain>
+                                    <i class="el-icon-delete"></i> 删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+        </el-card>
+    </el-main>
+</div>
+<!-- 引入jquery -->
+<script src="./javascripts/jquery.min.js"></script>
+<!-- 引入vue -->
+<script src="./javascripts/vue.min.js"></script>
+<!-- 引入elementUI -->
+<script src="./javascripts/elementUI.js"></script>
+<script>
+    //创建vue实例
+    new Vue({
+        //挂载视图
+        el: "#app",
+        data() {
+            return {
+                tableData: [{
+                    name: '王小虎',
+                    userGroup: '超级管理员'
+                },{
+                    name: '王小虎',
+                    userGroup: '管理员'
+                },{
+                    name: '王小虎',
+                    userGroup: '普通用户'
+                },]
+            };
+        },
+        methods: {
+            //格式化时间的方法
+            dateFormat: function (row, column) {
+                var date = row[column.property];
+                if (date == undefined) {
+                    return "";
+                }
+                return moment(date).format("YYYY-MM-DD");
+                //return moment(date).format("YYYY年MM月DD日");
+            },
+            //编辑和删除的方法
+            handleEdit(index, row) {
+                console.log(index, row);
+            },
+            handleDelete(index, row) {
+                console.log(index, row);
+            }
+        },
+        mounted() {
+            //console.log("视图挂载完毕!!!!");
+            //1. 发起ajax请求去后端路由获取数据
+
+            //修改this的指向，把this缓存起来指向vue实例
+            let _this = this;
+
+            $.get("/users/list", function (userlist) {
+                //console.log("服务器后端返回的用户数据列表", userlist);
+                //处理前端的业务逻辑： 把后端获取的用户数据赋值给tableData属性
+                //console.log(this); //juqery对象
+                _this.tableData = userlist;
+            });
+        }
+    });
+</script>
+</body>
+
+</html>

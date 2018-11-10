@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统—商品出库</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="styles/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body>
+<div id="app">
+    <el-main id="main">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>商品销售</span>
+            </div>
+            <div class="text item">
+                <!-- 添加的页面 -->
+                <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
+                         label-width="100px" v-model="labelPosition"
+                         class="demo-ruleForm">
+                    <el-form-item label="商品条形码" prop="barCode">
+                        <el-input v-model="ruleForm2.barCode"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="数量" prop="number">
+                        <el-input v-model="ruleForm2.goodsName"></el-input>计重商品单位为千克
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="success" @click="submitForm('ruleForm2')">加入订单</el-button>
+                        <span style="color: #5daf34">重新出库</span>
+                    </el-form-item>
+
+                    <template>
+                        <el-table :row-class-name="tableRowClassName"
+                                  :data="tableData"
+                                  style="width: 100%">
+
+                            <el-table-column label="名称">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="数量">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.number1}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="单价(元)">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.salesPrice }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="总价(元)">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.totalPrice }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="优惠总价(元)">
+                                <template slot-scope="scope">
+                                    <span style="margin-left: 10px">{{ scope.row.discountPrice }}</span>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                            <p class="total">总计：90元，优惠10元，小计：20</p>
+                    </template>
+
+                    </el-form-item>
+                    <el-form-item label="会员卡号：" prop="cardNumber">
+                        <el-input v-model="ruleForm2.cardNumber"></el-input>
+                        <p>填写会员卡卡号</p>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="success" @click="submitForm('ruleForm2')">确认提交</el-button>
+                    </el-form-item>
+                </el-form>
+
+            </div>
+        </el-card>
+    </el-main>
+</div>
+<!-- 引入jquery -->
+<script src="./javascripts/jquery.min.js"></script>
+<!-- 引入vue -->
+<script src="./javascripts/vue.min.js"></script>
+<!-- 引入elementUI -->
+<script src="./javascripts/elementUI.js"></script>
+<script>
+    //创建vue实例
+    new Vue({
+        //挂载视图
+        el: "#app",
+        data() {
+            return {
+                value: '',
+                labelPosition: 'top',
+                ruleForm2: {
+                    barCode:'',
+                    number: '1',
+                    name:'',
+                    number1:'',
+                    salesPrice:'',
+                    totalPrice:'',
+                    discountPrice:'',
+                    cardNumber:''
+                },
+                rules2: {
+                    barCode: [
+                        {required: true, message: "商品条形码必须填写", trigger: 'blur'}
+                    ],number: [
+                        {required: true, message: "数量必须填写", trigger: 'blur'}
+                    ]},
+                tableData: [{
+                    name:'优乐美',
+                    number1:'20',
+                    salesPrice:'5.00',
+                    totalPrice:'100.00',
+                    discountPrice:'10',
+                }]
+            };
+        },
+        methods: {
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex === 1) {
+                    return 'warning-row';
+                } else if (rowIndex === 3) {
+                    return 'success-row';
+                }
+                return '';
+            },
+            //提交表单
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //1. 表单验证通过就发起ajax请求到后端路由
+                           $.post('/users/add',this.ruleForm2,(result)=>{
+                        if(result.affectedRows>0){
+                            alert("添加成功");
+                        }else{
+                            alert("添加失败")
+                        }
+                           });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //重置表单
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+/* 卡片组件的样式 */
+.text {
+    font-size: 14px;
+}
+
+.item {
+    margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+.clearfix:after {
+    clear: both
+}
+
+.box-card {
+    width: 480px;
+    background-color: rgba(255, 255, 255, 0.6);
+    /*color: white;*/
+}
+
+/* 登录框的居中： 水平和垂直正中 */
+.el-card{
+    height: 300px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+/*背景颜色*/
+body{
+    background: url("../images/signinbg.jpg")no-repeat 0 -60px;
+    /*background-size: 100%;*/
+    background-size:cover;
+    /*background-position: 0 -40px;*/
+}
+/* 标题 */
+.el-card__header{
+    padding: 5px 20px;
+}
+
+.el-card__header h1{
+    font-size: 20px;
+}
+
+.el-card__header h1 span{
+    color: rgb(72, 116, 26);
+}
