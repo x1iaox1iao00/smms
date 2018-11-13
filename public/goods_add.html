@@ -34,7 +34,7 @@
                     </el-form-item>
                     <el-form-item label="商品条形码" prop="barcode">
                         <el-input v-model="ruleForm2.barcode"></el-input>
-                        <el-button type="success">生成条形码</el-button>
+                        <el-button type="success" @click="created">生成条形码</el-button>
                     </el-form-item>
                     <el-form-item label="商品名称" prop="goodsname">
                         <el-input v-model="ruleForm2.goodsname"></el-input>
@@ -130,9 +130,7 @@
                     ]},
             };
         },
-        created() {
-        this.ruleForm2.barcode=new Date().getTime();
-        },
+
         mounted() {
         $.get("/category/list",(dataList)=> {
             //把ajax请求获取的分类修改到模型上面
@@ -140,6 +138,9 @@
         });
         },
         methods: {
+            created() {
+                this.ruleForm2.barcode=new Date().getTime();
+            },
             //提交表单
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
