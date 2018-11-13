@@ -2,6 +2,9 @@
 html,body,#app,.el-container{
     height: 100%;
 }
+.redText{
+    color: red;
+}
 .el-header, .el-footer {
     color: #333;
     line-height: 30px;
@@ -156,19 +159,21 @@ color: #696D7A;}
 /*分类添加*/
 .title{margin: 10px 0;}
 .el-radio{margin: 10px 0;}
-.el-radio__input.is-checked .el-radio__inner{border-color: #dd6161;
-    background:#cf9236;}
 
 /*商品管理*/
 .el-table__header-wrapper{margin-top: 10px;color: black;}
 .el-table__header-wrapper:before{height: 3px;content: "";background-color: #cccccc;display: block;}
 .el-pagination{margin-top: 18px;}
+
 /*商品添加*/
-.el-textarea__inner{margin-bottom: 10px;    width: 60%;}
+.el-textarea__inner{margin-bottom: 10px;    width: 50%;}
 /*会员添加*/
 .tab{margin-bottom: 10px;}
 .tab td{
     padding: 8px 5px;
+}
+#searchForm .el-input{
+    width: 100%;
 }
 /*商品出库*/
 .total{margin: 10px 0;border-bottom: 1px solid #cccccc;padding: 10px 20px;width: 100%;

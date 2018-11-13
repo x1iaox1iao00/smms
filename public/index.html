@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="styles/elementUI.css">
     <!--引入样式-->
     <link rel="stylesheet" href="styles/index.css">
+    <!--验证合法性-->
+    <script src="/users/checkState"></script>
 </head>
 
 <body>
@@ -23,7 +25,7 @@
                 <div id="leftMenuTitle">
                     <h1>华联超市管理系统</h1>
                     <p>您好：admin</p>
-                    <p><a href="main.html" target="mainContent">管理首页</a> | <a href="signOut.html" target="mainContent">退出系统</a></p>
+                    <p><a href="main.html" target="mainContent">管理首页</a> | <a href="/users/signOut" >退出系统</a></p>
                 </div>
                 <!-- 导航菜单 -->
                 <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" unique-opened="true">
@@ -97,10 +99,10 @@
                         </template>
                         <!-- 子菜单内容 -->
                         <el-menu-item-group>
-                            <el-menu-item index="6-1"><a href="#">系统信息</a></el-menu-item>
+                            <el-menu-item index="6-1"><a href="main.html" target="mainContent">系统信息</a></el-menu-item>
                             <el-menu-item index="6-2"><a href="#">系统配置</a></el-menu-item>
-                            <el-menu-item index="6-3"><a href="#">权限管理</a></el-menu-item>
-                            <el-menu-item index="6-4"><a href="#">添加管理组</a></el-menu-item>
+                        <!--    <el-menu-item index="6-3"><a href="#">权限管理</a></el-menu-item>
+                            <el-menu-item index="6-4"><a href="#">添加管理组</a></el-menu-item>-->
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="7">

@@ -25,7 +25,6 @@
             </div>
             <div class="text item">
                 <!-- 添加的页面 -->
-
                 <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2"
                          label-width="100px"
                          class="demo-ruleForm">
@@ -40,8 +39,8 @@
                     </el-form-item>
                     <el-form-item label="可用状态" prop="cg_isLocked">
                         <el-radio-group v-model="ruleForm2.cg_isLocked">
-                            <el-radio label="1">启用</el-radio>
-                            <el-radio label="0">禁用</el-radio>
+                            <el-radio label="0">启用</el-radio>
+                            <el-radio label="1">禁用</el-radio>
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item>
@@ -73,43 +72,44 @@
                 },
                 categoryList:[],
                 rules2: {
-                    cg_name: [
+                    sortname: [
                         {required: true, message: "分类名称必须填写", trigger: 'blur'}
                     ]},
             };
-        },
-        mounted(){
-            $.get("/category/list",(dataList)=>{
-                this.categoryList=dataList;
-            })
         },
         methods: {
             //提交表单
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        //1. 表单验证通过就发起ajax请求到后端路由
-                           $.post('/category/add',this.ruleForm2,(result)=>{
-                        if(result.isOk){
-                            if(confirm("继续添加吗?")){
-                                location.reload();
-                            }else {
+                        console.log(this.ruleForm2);
+                        $.post('/category/save',this.ruleForm2,(result)=>{
+                            if(result.isOk){
+                                alert(result.msg);
                                 location.href="sort_list.html"
+                            }else{
+                                alert(result.msg)
                             }
-                        }else{
-                            alert(result.msg)
-                        }
-                           });
+                        });
                     } else {
                         console.log('error submit!!');
                         return false;
                     }
                 });
             },
-            //重置表单
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
-            }
+        },
+        mounted(){
+            let reqUrl=location.href;
+            let id=reqUrl.split("=")[1];
+            $.get('/category/getCateById',{id},(sortData)=>{
+                let data=sortData[0];
+                console.log( sortData);
+                this.ruleForm2.cg_name=data.cg_name;
+                this.ruleForm2.cg_fatherID=data.cg_fatherID;
+                this.ruleForm2.cg_isLocked=data.cg_isLocked.toString();
+                this.ruleForm2.cg_id=data.cg_id;
+                console.log( this.ruleForm2);
+            })
         }
     });
 </script>

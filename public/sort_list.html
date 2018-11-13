@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="styles/elementUI.css">
     <!-- 引入首页的样式 -->
     <link rel="stylesheet" href="styles/index.css">
+    <!--验证合法性-->
+    <script src="/users/checkState"></script>
 </head>
 
 <body>
@@ -25,15 +27,21 @@
                 <!-- 账号管理 -->
                 <template>
                     <el-table :data="tableData" :row-class-name="tableRowClassName" style="width: 100%">
-                        <el-table-column label="分类名称" width="600">
+                        <el-table-column label="编号" prop="cg_id">
+                        </el-table-column>
+                        <el-table-column label="名称" prop="cg_name">
+                        </el-table-column>
+                        <el-table-column label="父级分类">
                             <template slot-scope="scope">
-                                <span style="margin-left: 10px">{{ scope.row.name }}</span>
+                                <span> {{ scope.row.father_name }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="管理">
+                        <el-table-column label="管理" width="300">
                             <template slot-scope="scope">
-                                <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary" plain>
+                                <el-button size="mini" @click="handleEdit(scope.row.cg_id)" type="primary" plain>
                                     <i class="el-icon-edit"></i> 编辑</el-button>
+                                <el-button size="mini" @click="handleDelete(scope.row.cg_id)" type="danger" plain>
+                                    <i class="el-icon-delete"></i> 删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -55,13 +63,7 @@
         el: "#app",
         data() {
             return {
-                tableData: [{
-                    name: '日用品',
-                },{
-                    name: 'i-舒肤佳',
-                },{
-                    name: 'i-海飞丝',
-                },]
+                tableData: []
             };
         },
         methods: {
@@ -74,10 +76,32 @@
                 return '';
             },
             //编辑和删除的方法
-            handleEdit(index, row) {
-                console.log(index, row);
+            handleEdit(id) {
+                location.href="sort_edit.html?id="+id;
+            },
+            handleDelete(id) {
+                $.get('/category/del',{id},(result)=>{
+                    if(result.isOk){
+                        this.dataArr();
+                    }else{
+                        alert(result.msg);
+                    }
+                });
+            },
+            dataArr(){
+                $.get("/category/list", (categorylist)=> {
+                    categorylist.forEach((v) => {
+                        if(v.father_name==null){
+                            v.father_name="顶级分类";
+                        }
+                    });
+                    this.tableData = categorylist;
+                });
             }
-        }
+        },
+        mounted() {
+        this.dataArr();
+    }
     });
 </script>
 </body>

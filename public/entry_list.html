@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="styles/elementUI.css">
     <!-- 引入首页的样式 -->
     <link rel="stylesheet" href="styles/index.css">
+    <!--验证合法性-->
+    <script src="/users/checkState"></script>
 </head>
 
 <body>
@@ -25,7 +27,7 @@
             <div class="text item">
                 <!--下拉框-->
                 <template>
-                    分类：<el-select v-model="value" placeholder="请选择">
+                    分类<el-select v-model="value" placeholder="请选择">
                         <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -34,7 +36,7 @@
                         </el-option>
                     </el-select>
                 </template>
-                <span>关键字：</span>
+                <span>关键字</span>
                 <el-input v-model="input" placeholder=""></el-input>
                 <span>(商品名称，条形码)</span>
                 <el-button type="primary" icon="el-icon-search">查询</el-button>
