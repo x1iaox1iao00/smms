@@ -15,7 +15,6 @@
     <!--验证合法性-->
     <script src="/users/checkState"></script>
 </head>
-
 <body>
 <div id="app">
     <el-main id="main">
@@ -39,7 +38,6 @@
                         <el-button type="success" @click="submitForm('ruleForm2')">加入订单</el-button>
                         <span style="color: #5daf34">重新出库</span>
                     </el-form-item>
-
                     <template>
                         <el-table :row-class-name="tableRowClassName"
                                   :data="tableData"
@@ -73,7 +71,6 @@
                         </el-table>
                             <p class="total">总计：90元，优惠10元，小计：20</p>
                     </template>
-
                     </el-form-item>
                     <el-form-item label="会员卡号：" prop="cardNumber">
                         <el-input v-model="ruleForm2.cardNumber"></el-input>
@@ -83,7 +80,6 @@
                         <el-button type="success" @click="submitForm('ruleForm2')">确认提交</el-button>
                     </el-form-item>
                 </el-form>
-
             </div>
         </el-card>
     </el-main>

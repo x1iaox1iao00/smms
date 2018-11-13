@@ -6,6 +6,7 @@ let connection = mysql.createConnection({
     password: 'root', //密码
     database: 'smms' //数据库名称
 });
+
 //打开数据库
 connection.connect();
 module.exports = connection;

@@ -72,7 +72,6 @@ router.get("/getUserById", (req, res) => {
 router.post('/save', function (req, res, next) {
     //接收数据
     let {pass, username, region,u_id,oldPwd} = req.body;
-    // let newPass=pass;
     if(oldPwd!==pass){
         pass = md5.createHash("md5").update(pass).digest("hex");
     }

@@ -27,17 +27,6 @@ router.post('/add', function (req, res) {
     });
 });
 
-// // 获取所有商品
-// router.get("/list", (req, res) => {
-//     //1. 构造sql语句
-//     let sqlStr="select t1.*,t2.cg_name from goodsTable as t1 left join categorygoods as t2 on t1.cg_id=t2.cg_id";
-//
-//     //执行sql
-//     connection.query(sqlStr,(err,categoryList)=>{
-//         if(err) throw err;
-//         res.send(categoryList);
-//     });
-// });
 // 获取商品的分页数据信息
 router.get("/listPagerSearch",(req,res)=>{
     //接收页码\每页大小\关键词\分类id

@@ -15,7 +15,6 @@
     <!--验证合法性-->
     <script src="/users/checkState"></script>
 </head>
-
 <body>
 <div id="app">
     <el-main id="main">
@@ -78,13 +77,11 @@
                     <el-form-item label="商品详情" prop="goodsDetails">
                         <el-input type="textarea" rows="5" v-model="ruleForm2.goodsDetails"></el-input>
                     </el-form-item>
-
                     <el-form-item>
                         <el-button type="success" @click="submitForm('ruleForm2')">添加商品</el-button>
                         <el-button @click="resetForm('ruleForm2')">重置</el-button>
                     </el-form-item>
                 </el-form>
-
             </div>
         </el-card>
     </el-main>

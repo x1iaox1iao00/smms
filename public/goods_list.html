@@ -154,8 +154,7 @@
                     pageSize: this.pageSize,        //每页大小
                     keywords: this.search.keywords, //关键词
                     category: this.search.category  //分类
-                }
-
+                };
                 $.get("/goods/listPagerSearch", pageSearchObj, (pagerData) => {
                     //console.log(pagerData);
                     //{"total":15,"datalist":goodsList}

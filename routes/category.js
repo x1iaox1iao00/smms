@@ -29,7 +29,6 @@ router.get("/list", (req, res) => {
     //1. 构造sql语句
     let sqlStr="select t1.*,t2.cg_name as father_name from categorygoods as t1 left join categorygoods as t2 on t1.cg_fatherID=t2.cg_id";
 
-
     //2. 执行sql语句
     connection.query(sqlStr, function (error, categorylist) {
         if (error) throw error; //出错后面的代码不执行
