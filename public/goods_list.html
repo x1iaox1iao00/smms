@@ -29,7 +29,7 @@
                 <div class="text item">
                     <el-form :inline="true" :model="search" id="searchForm" class="demo-form-inline">
                         <el-form-item label="所属分类">
-                            <el-select v-model="search.category" placeholder="分类选择">
+                            <el-select v-model="search.category" placeholder="分类选择" clearable>
                                 <el-option v-for="(c, index) in categoryList" :key="index" :label="c.cg_name" :value="c.cg_id"></el-option>
                             </el-select>
                         </el-form-item>
