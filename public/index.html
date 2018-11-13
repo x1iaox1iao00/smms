@@ -23,7 +23,7 @@
                 <!-- 左侧菜单的标题 -->
                 <div id="leftMenuTitle">
                     <h1>华联超市管理系统</h1>
-                    <p>您好：admin</p>
+                    <p>您好：<span>{{name}}</span></p>
                     <p><a href="main.html" target="mainContent">管理首页</a> | <a href="/users/signOut" >退出系统</a></p>
                 </div>
                 <!-- 导航菜单 -->
@@ -131,7 +131,7 @@
             <el-container>
                 <!--头部-->
                 <el-header height="80px">
-                    <h2>欢迎您 admin</h2>
+                    <h2>欢迎您 <span>{{name}}</span></h2>
                     <p>查看详细的系统信息</p>
                 </el-header>
                 <!-- 主体内容开始 -->
@@ -156,6 +156,9 @@
             //挂载视图
             el: "#app",
             data() {
+                return{
+                    name:'',
+                }
             },
             methods: {
                 handleOpen(key, keyPath) {
@@ -164,6 +167,11 @@
                 handleClose(key, keyPath) {
                     console.log(key, keyPath);
                 }
+            },
+            mounted() {
+                    $.get("/users/name",(data)=> {
+                        this.name=data;
+                    });
             }
         });
     </script>

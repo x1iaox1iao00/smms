@@ -5,6 +5,16 @@ let md5 = require("crypto");
 //引入
 var connection=require("./mysqlConn");
 
+/*获取用户名*/
+router.get('/name',function (req,res) {
+    username=req.cookies.username;
+    if(username){
+    res.send(username);
+    }else{
+        res.send("");
+    }
+});
+
 /* 添加账号 */
 router.post('/add', function (req, res) {
     //接收数据

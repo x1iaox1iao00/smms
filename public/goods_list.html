@@ -45,7 +45,6 @@
                 <!--列表-->
                 <template>
                     <el-table :data="tableData" style="width: 100%">
-
                             <el-table-column label="商品条形码" prop="barcode" >
                             </el-table-column>
                         <el-table-column label="商品名称" prop="goodsname">
@@ -142,12 +141,6 @@
             },
             //抽取获取数据的ajax请求为一个公共的方法
             getDataAjax() {
-                //把页码和每页大小传入后端路由
-                // let pageObj = {
-                //     currentPage: this.currentPage,  //当前页
-                //     pageSize: this.pageSize        //每页大小
-                // }
-
                 //查询+分页
                 let pageSearchObj = {
                     currentPage: this.currentPage,  //当前页
@@ -185,7 +178,6 @@
             //填充分类
             $.get("/category/list",(dataList)=> {
                 //把ajax请求获取的分类修改到模型上面
-                //console.log(dataList);
                 this.categoryList=dataList;
             });
         }
