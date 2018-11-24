@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统—价格统计</title>
+    <!-- 引入重置样式 -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="styles/elementUI.css">
+    <!-- 引入首页的样式 -->
+    <link rel="stylesheet" href="styles/index.css">
+    <!--验证合法性-->
+    <script src="/users/checkState"></script>
+    <style>
+        #main{background-color: #ccc}
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-main id="main">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>销售统计</span>
+            </div>
+            <div class="text item">
+                <!-- 价格统计 -->
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                <div id="myChart" style="height:400px;width:100%"></div>
+            </div>
+        </el-card>
+    </el-main>
+</div>
+<!-- ECharts单文件引入 -->
+<!--<script src="./javascripts/echarts-all.js"></script>-->
+<!-- 引入jquery -->
+<script src="./javascripts/jquery.min.js"></script>
+<!-- 引入vue -->
+<script src="./javascripts/vue.min.js"></script>
+<!-- 引入moment时间格式化的js库 -->
+<script src="./javascripts/moment-with-locales.min.js"></script>
+<!-- 引入elementUI -->
+<script src="./javascripts/elementUI.js"></script>
+<!-- ECharts单文件引入 -->
+<script src="./javascripts/echarts-all.js"></script>
+<script>
+new Vue({
+    el:"#app",
+    data(){
+      return{
+          option:{
+              title : {
+                  text: '销售额',
+                  subtext: '上半年'
+              },
+              tooltip : {
+                  trigger: 'axis'
+              },
+              legend: {
+                  data:['日用品','食品']
+              },
+              toolbox: {
+                  show : true,
+                  feature : {
+                      mark : {show: true},
+                      dataView : {show: true, readOnly: false},
+                      magicType : {show: true, type: ['line', 'bar']},
+                      restore : {show: true},
+                      saveAsImage : {show: true}
+                  }
+              },
+              calculable : true,
+              xAxis : [
+                  {
+                      type : 'category',
+                      boundaryGap : false,
+                      data : ['一月','二月','三月','四月','五月','六月']
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value',
+                      axisLabel : {
+                          formatter: '{value} 万元'
+                      }
+                  }
+              ],
+              series : [
+                  {
+                      name:'日用品',
+                      type:'line',
+                      data:[30, 26, 17, 10, 22, 18],
+                      markPoint : {
+                          data : [
+                              {type : 'max', name: '最大值'},
+                              {type : 'min', name: '最小值'}
+                          ]
+                      },
+                      markLine : {
+                          data : [
+                              {type : 'average', name: '平均值'}
+                          ]
+                      }
+                  },
+                  {
+                      name:'食品',
+                      type:'line',
+                      data:[27, 19, 20,23, 31,25],
+                      markPoint : {
+                          data : [
+                              {type : 'max', name: '最大值'},
+                              {type : 'min', name: '最小值'}
+                              // {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                          ]
+                      },
+                      markLine : {
+                          data : [
+                              {type : 'average', name : '平均值'}
+                          ]
+                      }
+                  }
+              ]
+          }
+      }
+    },
+    mounted(){
+        var myChart = echarts.init(document.getElementById('myChart'));
+        // 为echarts对象加载数据
+        myChart.setOption(this.option)
+    }
+});
+</script>
+</body>
+</html>

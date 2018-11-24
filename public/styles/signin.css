@@ -24,7 +24,7 @@
 
 /* 登录框的居中： 水平和垂直正中 */
 .el-card{
-    height: 300px;
+    height: 330px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -51,3 +51,4 @@ body{
 .el-card__header h1 span{
     color: rgb(72, 116, 26);
 }
+.el-input.yzm{width: 170px;}

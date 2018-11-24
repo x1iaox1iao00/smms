@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="styles/elementUI.css">
    <!--引入样式-->
     <link rel="stylesheet" href="styles/signin.css">
+    <style>
+        #myCanvas{
+            vertical-align: middle;
+            margin-left: 44px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -27,6 +33,11 @@
                     <el-form-item label="登录密码" prop="checkPass">
                         <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
                     </el-form-item>
+                    <el-form-item label="验证码" prop="checkCord">
+                        <el-input class="yzm" type="text" v-model="ruleForm2.checkCord" autocomplete="off"></el-input>
+                        <canvas id="myCanvas" width="100" height="40" title="看不清，点击换一张">您的浏览器不支持，请升级浏览器</canvas>
+                    </el-form-item>
+
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
                         <el-button @click="resetForm('loginForm')">重置</el-button>
@@ -49,10 +60,12 @@
             data() {
                 //返回数据
                 return {
+                    code:'',
                     //数据对象： 有2个属性，username用户名   checkPass密码
                     ruleForm2: {
                         username: '',
-                        checkPass: ''
+                        checkPass: '',
+                        checkCord:''
                     },
                     //验证规则
                     rules2: {
@@ -63,6 +76,10 @@
                         checkPass: [
                             { required: true, message: '请输入密码', trigger: 'blur' },
                             { min: 5, max: 12, message: '密码长度在5~12之间', trigger: 'blur' }
+                        ],
+                        checkCord: [
+                            { required: true, message: '请输入验证码', trigger: 'blur' },
+                            { min: 4, max: 4, message: '验证码长度4位', trigger: 'blur' }
                         ]
                     }
                 };
@@ -74,16 +91,23 @@
                     //找到表单对象调用validate()验证方法
                     this.$refs[formName].validate((valid) => {
                         if (valid) {
-                            //一般前端验证通过就会发起ajax请求到后端路由做数据库验证
-                            $.post('/users/loginCheck',this.ruleForm2,(result)=>{
-                                if(result.isOk){
-                                    alert(result.msg);
-                                    location.href='index.html';
-                                }else{
-                                    alert(result.msg);
+                            if(this.ruleForm2.checkCord.toLowerCase() === this.code.toLowerCase()){
+                                // 验证码输入正确
+                                $.post('/users/loginCheck',this.ruleForm2,(result)=>{
+                                    if(result.isOk){
+                                        alert(result.msg);
+                                        location.href='index.html';
+                                    }else{
+                                        alert(result.msg);
+                                    }
+                                })
+                            }else {
+                                // 验证码输入错误
+                                alert("验证码输入错误");
                                 }
-                            })
-                        } else {
+                            //一般前端验证通过就会发起ajax请求到后端路由做数据库验证
+                        }else {
+                            // 验证码输入错误
                             console.log('error submit!!'); //验证失败
                             return false; //阻止表单提交
                         }
@@ -92,8 +116,69 @@
                 //重置表单的方法
                 resetForm(formName) {
                     this.$refs[formName].resetFields(); //调用重置方法清空表单
-                }
+                },
+                checkCord() {
+            //获取canvas元素
+            let myCanvas = document.getElementById("myCanvas");
+            //设置上下文的绘图方式
+            let ctx = myCanvas.getContext("2d");
+            //随机数
+            function rndNum(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) + min);
             }
+            //随机颜色
+            function rndColor(min, max, isAlpha) {
+                let red = rndNum(min, max);
+                let green = rndNum(min, max);
+                let blue = rndNum(min, max);
+                let alpha = 1;
+                if (isAlpha) {
+                    alpha = Math.random();
+                }
+                return `rgba(${red},${green},${blue},${alpha})`
+            }
+            //背景
+            let w = myCanvas.width;
+            let h = myCanvas.height;
+            ctx.fillStyle = rndColor(170, 255, false);
+            ctx.fillRect(0, 0, w, h);
+            //文字
+            let textArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+            ctx.font = "30px 'arial'";
+            this.code = '';
+            for (let i = 0; i < 4; i++) {
+                let indexRnd = rndNum(0, textArray.length - 1);
+                let textCon = textArray[indexRnd];
+                ctx.fillStyle = rndColor(0, 170, false);
+                this.code += textCon;
+                ctx.fillText(textCon, i * 20 + 10, 30);
+            }
+            //干扰
+            let number = rndNum(5, 20);
+            for (let i = 0; i < number; i++) {
+                //画圆
+                ctx.beginPath();
+                ctx.fillStyle = rndColor(100, 200, true);
+                ctx.arc(rndNum(0, w), rndNum(0, h), rndNum(1, 4), 0, 2 * Math.PI);
+                ctx.fill();
+                //画线
+                ctx.beginPath();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = rndColor(100, 200, true);
+                ctx.moveTo(rndNum(0, w), rndNum(0, h));
+                ctx.lineTo(rndNum(0, w), rndNum(0, h));
+                ctx.stroke();
+            }
+        }
+            },
+            mounted(){
+                //自动执行
+                this.checkCord();
+                //点击更换
+                myCanvas.onclick = this.checkCord;
+            }
+
         });
     </script>
 </body>
